@@ -1,0 +1,15 @@
+<div><p><strong>Name:</strong> {{ user.username }}</p>
+  <p><strong>Role:</strong> {{ user.roles.join(', ') }}</p>
+  
+  <div *ngIf="user.tasks">
+    <h3>Tasks</h3>
+    <ul>
+      <li *ngFor="let task of user.tasks">
+        <p><strong>Title:</strong> {{ task.title }}</p>
+        <p><strong>Description:</strong> {{ task.description }}</p>
+        <p><strong>Status:</strong> {{ task.status }}</p>
+        <p><strong>Created At:</strong> {{ task.createdAt }}</p>
+        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+      </li>
+    </ul>
+  </div></div>

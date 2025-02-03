@@ -37,9 +37,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
           },
           "configurations": {
             "production": {
@@ -72,7 +74,10 @@
               "buildTarget": "grinberry-prject:build:production"
             },
             "development": {
-              "buildTarget": "grinberry-prject:build:development"
+              "buildTarget": "grinberry-prject:build:development",
+              "ssl": true,
+              "sslKey": "ssl/private.key",
+              "sslCert": "ssl/certificate.crt"
             }
           },
           "defaultConfiguration": "development"

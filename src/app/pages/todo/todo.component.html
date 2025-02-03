@@ -1,0 +1,96 @@
+<div class="container-fluid py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body p-5">
+          <form class="d-flex justify-content-center align-items-center mb-4" (ngSubmit)="onSubmit()">
+            <div data-mdb-input-init class="form-outline flex-fill">
+              <input type="text" id="form2" class="form-control" placeholder="Add new task" [(ngModel)]="newTaskTitle" name="taskTitle" required />
+            </div>
+            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info ms-2">Add</button>
+          </form>
+          <!-- Tabs navs -->
+          <ul class="nav nav-tabs mb-4 pb-2" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="tab-all" data-bs-toggle="tab" data-bs-target="#tab-all-content" role="tab"
+                aria-controls="tab-all-content" aria-selected="true">All</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="tab-active" data-bs-toggle="tab" data-bs-target="#tab-active-content" role="tab"
+                aria-controls="tab-active-content" aria-selected="false">Active</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="tab-completed" data-bs-toggle="tab" data-bs-target="#tab-completed-content" role="tab"
+                aria-controls="tab-completed-content" aria-selected="false">Completed</a>
+            </li>
+          </ul>
+          <!-- Tabs navs -->
+          <!-- Tabs content -->
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-all-content" role="tabpanel" aria-labelledby="tab-all">
+              <ul class="list-group mb-0">
+                <li *ngFor="let task of user.tasks" class="list-group-item d-flex align-items-center justify-content-between border-0 mb-2 rounded"
+                  [ngClass]="{'completed-task': task.status === 'COMPLETED'}" style="background-color: #f4f6f7;">
+                  <div class="d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" [checked]="task.status === 'COMPLETED'" (change)="toggleTaskStatus(task)" aria-label="..." />
+                    <span [ngClass]="{'text-decoration-line-through': task.status === 'COMPLETED'}">{{ task.title }}</span>
+                  </div>
+                  <div>
+                    <button mat-icon-button (click)="openTaskDialog(task)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteTask(task)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="tab-active-content" role="tabpanel" aria-labelledby="tab-active">
+              <ul class="list-group mb-0">
+                <ng-container *ngFor="let task of user.tasks">
+                  <li *ngIf="task.status === 'IN_PROGRESS'" class="list-group-item d-flex align-items-center justify-content-between border-0 mb-2 rounded"
+                    style="background-color: #f4f6f7;">
+                    <div class="d-flex align-items-center">
+                      <input class="form-check-input me-2" type="checkbox" (change)="toggleTaskStatus(task)" aria-label="..." />
+                      <span>{{ task.title }}</span>
+                    </div>
+                    <div>
+                      <button mat-icon-button (click)="openTaskDialog(task)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="deleteTask(task)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="tab-completed-content" role="tabpanel" aria-labelledby="tab-completed">
+              <ul class="list-group mb-0">
+                <ng-container *ngFor="let task of user.tasks">
+                  <li *ngIf="task.status === 'COMPLETED'" class="list-group-item d-flex align-items-center justify-content-between border-0 mb-2 rounded"
+                    style="background-color: #f4f6f7;">
+                    <div class="d-flex align-items-center">
+                      <input class="form-check-input me-2" type="checkbox" [checked]="true" (change)="toggleTaskStatus(task)" aria-label="..." />
+                      <s>{{ task.title }}</s>
+                    </div>
+                    <div>
+                      <button mat-icon-button (click)="openTaskDialog(task)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="deleteTask(task)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
