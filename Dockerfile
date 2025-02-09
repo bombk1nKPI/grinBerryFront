@@ -1,32 +1,14 @@
-# Stage 1: Build the Angular application
-FROM node:18 AS build
 
-# Setup the working directory
+FROM node:latest AS build
 WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json
 COPY package.json package-lock.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy other files and folders to the working directory
 COPY . .
+RUN npm run build
 
-# Build Angular application in PROD mode
-RUN npm run build --prod
-
-# Stage 2: Serve the application using Nginx
 FROM nginx:alpine
-
-# Copy nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy built Angular app files to Nginx HTML folder
 COPY --from=build /usr/src/app/dist/grinberry-project /usr/share/nginx/html
-
-# Expose port 80
-EXPOSE 80
-
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+COPY ssl/certificate.crt /etc/nginx/ssl/certificate.crt
+COPY ssl/private.key /etc/nginx/ssl/private.key
+EXPOSE 8443
